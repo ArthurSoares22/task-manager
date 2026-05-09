@@ -24,6 +24,7 @@ const hash = bcrypt.hashSync(password,10)
  return res.status(201).json({message: 'usuário criado com sucesso'})
 }
 
+//FEATURE DE CONFIRMAÇÃO DE LOGIN
 exports.login = (req, res) => {
     const {email, password} = req.body
     if(!email || !password){
@@ -45,3 +46,4 @@ if(!senhaCorreta){
 const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '1d'})
 return res.status(200).json({token: token})
 }
+
