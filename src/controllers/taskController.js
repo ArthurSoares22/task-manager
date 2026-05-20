@@ -43,6 +43,23 @@ exports.taskCheck = (req, res) => {
 }
 
 exports.taskDelete = (req, res) => {
-    return res.status(200).json({ message: 'ok' })
+   const { id: taskId} =  req.params;
+   const {id: userId} = req.user
+   
+   const findtask = db.prepare('SELECT * FROM tasks WHERE id = ?')
+   const task =  findtask.get(taskId);
+
+   if(!task){
+
+        return res.status(404).json({ message: "tarefa não encontrada" })
+   }
+
+    if(task.user_id != userId ){
+        return res.status(403).json({ message: "não autorizado" })
+    }
+
+    const deletetask = db.prepare('DELETE FROM tasks WHERE id = ?')
+    deletetask.run(taskId);
+    return res.status(200).json({message: 'task apagada com sucesso!'});
 }
 
