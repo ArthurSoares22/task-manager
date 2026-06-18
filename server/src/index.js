@@ -1,13 +1,14 @@
 //importsx
 require('dotenv').config()
-
 const express = require('express') // aqui estamos criando um função express
+const cors = require('cors')
 const authRoutes = require('./routes/authRoutes')
 const taskRoutes = require('./routes/taskRoutes')
 require('./config/database')
 
 //app
 const app = express()// usando a variavel app que executa as funcionalidades do express
+app.use(cors())
 app.use(express.json())// convertendo arquivos json em objetos javascript(precisa vir sempre antes de qualquer rota)
 
 //rotas
